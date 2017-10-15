@@ -688,7 +688,7 @@ angular.module('ulakbus.dashboard')
                 };
                 //this is a helper function that will change the format of the date to dd.mm.YYYY
                 function changeDateFormat(dateStr) {
-                    return moment(dateStr).format('DD.MM.YYYY');
+                    return moment(dateStr).format('dd.MM.yyyy');
                 }
                 //this function is used to download csv from the csv link received from backend
                 $scope.downloadCsv = function(){

@@ -1465,10 +1465,10 @@ angular.module('ulakbusBap')
      */
     generator.dateformatter = function (formObject) {
         var ndate = new Date(formObject);
+        var newdatearray = Moment(ndate).format('DD.MM.YYYY');        
         if (isNaN(ndate) || formObject === null) {
             return null;
         } else {
-            var newdatearray = Moment(ndate).format('DD.MM.YYYY');
             $log.debug('date formatted: ', newdatearray);
             return newdatearray;
         }

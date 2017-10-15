@@ -461,13 +461,7 @@ angular.module('ulakbus.formService', ['ui.bootstrap'])
                         scope[v.type][k].form.push(item.name);
                     }
 
-                    try {
-                        if (item.type === 'date') {
-                            //scope.model[k][item.name] = generator.dateformatter(scope.model[k][item.name]);
-                        }
-                    } catch (e) {
-                        $log.debug('Error: ', e.message);
-                    }
+            
 
 
                 });
@@ -656,7 +650,16 @@ angular.module('ulakbus.formService', ['ui.bootstrap'])
                 },
                 select: {
                     default: function (scope, v, k) {
-                        titleMap: v.titleMap.unshift({name:"-",value:'-1'});
+                        var nullExist = false;
+                        for(var i=0; i<v.titleMap.length; i++){
+                            if(v.titleMap[i].value ==='-1'){
+                                nullExist = true;
+                                break;
+                            }
+                        }
+                        if(!nullExist){
+                            titleMap: v.titleMap.unshift({name:"-",value:'-1'});
+                        }
                         scope.form[scope.form.indexOf(k)] = {
                             type: "template",
                             title: v.title,
@@ -767,6 +770,7 @@ angular.module('ulakbus.formService', ['ui.bootstrap'])
                         };
                     }
                 },
+                
                 date: {
                     default: function (scope, v, k) {
                         $log.debug('date:', scope.model[k]);
@@ -847,7 +851,17 @@ angular.module('ulakbus.formService', ['ui.bootstrap'])
                         };
                     }
                 },
-                int: {default: _numbers},
+                int: {
+                    default: function (scope, v, k) {
+                        scope.form[scope.form.indexOf(k)] = {
+                            type: "number",
+                            title: v.title,
+                            name: k,
+                            key: k,
+                            fieldHtmlClass: "integerField"
+                        }
+                    }
+                },
                 boolean: {
                     default: function (scope, v, k) {
                     }
@@ -1147,12 +1161,12 @@ angular.module('ulakbus.formService', ['ui.bootstrap'])
          */
         generator.dateformatter = function (formObject) {
             var ndate = new Date(formObject);
+            
             if (isNaN(ndate) || formObject === null) {
                 return null;
-            } else {
-                var newdatearray = Moment(ndate).format('DD.MM.YYYY');
-                $log.debug('date formatted: ', newdatearray);
-                return newdatearray;
+            } else if(!isNaN(ndate) || formObject !== null){
+                var newdatearray = moment(ndate).format('DD.MM.YYYY');
+                return newdatearray;                
             }
         };
         /**
