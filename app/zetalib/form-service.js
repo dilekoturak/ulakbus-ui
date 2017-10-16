@@ -1161,12 +1161,13 @@ angular.module('ulakbus.formService', ['ui.bootstrap'])
          */
         generator.dateformatter = function (formObject) {
             var ndate = new Date(formObject);
+            var newdatearray = moment(ndate).format('DD.MM.YYYY');
             
             if (isNaN(ndate) || formObject === null) {
-                return null;
-            } else if(!isNaN(ndate) || formObject !== null){
-                var newdatearray = moment(ndate).format('DD.MM.YYYY');
-                return newdatearray;                
+                return newdatearray;
+            } else {
+                $log.debug('date formatted: ', newdatearray);
+                return newdatearray;
             }
         };
         /**
