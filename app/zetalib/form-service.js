@@ -1161,12 +1161,12 @@ angular.module('ulakbus.formService', ['ui.bootstrap'])
          */
         generator.dateformatter = function (formObject) {
             var ndate = new Date(formObject);
-            var newdatearray = moment(ndate).format('DD.MM.YYYY');
-            
+
             if (isNaN(ndate) || formObject === null) {
-                return newdatearray;
+                return null;
             } else {
                 $log.debug('date formatted: ', newdatearray);
+                var newdatearray = moment(ndate).format('DD.MM.YYYY');
                 return newdatearray;
             }
         };
@@ -1773,7 +1773,7 @@ angular.module('ulakbus.formService', ['ui.bootstrap'])
                             // reformat listnode model
                             var reformattedModel = {};
                             angular.forEach(childmodel.model, function (value, key) {
-                                if (key.indexOf('_id') > -1) {
+                                if (key.indexOf() > -1) {
 
                                     // todo: understand why we got object here!
                                     // hack to fix bug with value as object
