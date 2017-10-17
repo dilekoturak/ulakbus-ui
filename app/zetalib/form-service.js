@@ -836,7 +836,7 @@ angular.module('ulakbus.formService', ['ui.bootstrap'])
                             open: function ($event) {
                                 this.disabled = true;
                                 // scope.$apply();
-                                scope.model[k] = Moment(scope.model[k], "DD.MM.YYYY").toDate();
+                                scope.model[k] = moment(scope.model[k], "DD.MM.YYYY");
                                 var that = this;
                                 $timeout(function () {
                                     that.status.opened = true;
@@ -1161,14 +1161,18 @@ angular.module('ulakbus.formService', ['ui.bootstrap'])
          */
         generator.dateformatter = function (formObject) {
             var ndate = new Date(formObject);
+            var newdatearray = moment(ndate).format('DD.MM.YYYY');
+
 
             if (isNaN(ndate) || formObject === null) {
-                return null;
-            } else {
+
+                return generator.dateformatter(ndate);
+            }
+            else {
                 $log.debug('date formatted: ', newdatearray);
-                var newdatearray = moment(ndate).format('DD.MM.YYYY');
                 return newdatearray;
             }
+            return newdatearray;
         };
         /**
          * @memberof ulakbus.formService
